@@ -1,5 +1,9 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .hero-section {
-    background-image: url(../../images/Medical-home.jpg); /* Replace with your actual background image URL */
+    background-image: url(../../Assets/images/Medical-home.jpg); /* Replace with your actual background image URL */
     background-size: cover;
     background-position: center;
     height: 60vh;

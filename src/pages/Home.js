@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./css/Home.css"; // Assuming you are adding custom CSS styles in a separate file
-import Appimg from '../images/Appoin.jpg'
-import recored from '../images/Recored.jpg'
-import presc from '../images/Prescr.jpg'
+import Appimg from '../Assets/images/Appoin.jpg'
+import recored from '../Assets/images/Recored.jpg'
+import presc from '../Assets/images/Prescr.jpg'
 
 const Home = () => {
   return (

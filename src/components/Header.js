@@ -1,16 +1,16 @@
 import React from "react";
+import './Header.css';
 import { Link } from "react-router-dom";
-import './Header.css'
 
 const Header = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark custom-bg" style={{ backgroundColor: '#0089ba' }}>
       <div className="container d-flex justify-content-between align-items-center">
         {/* Brand Name */}
-        <Link className="navbar-brand" to="/">
+        <a className="navbar-brand" href="#hero">
           AbyssiniaCare
-        </Link>
-        
+        </a>
+
         {/* Navbar Toggler for Mobile */}
         <button
           className="navbar-toggler"
@@ -23,19 +23,19 @@ const Header = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        
+
         {/* Navbar Links */}
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
+              <a className="nav-link" href="#hero">
                 Home
-              </Link>
+              </a>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/services">
+              <a className="nav-link" href="#Services">
                 Services
-              </Link>
+              </a>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/login">
