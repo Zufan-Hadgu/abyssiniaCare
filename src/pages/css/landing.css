@@ -1,0 +1,88 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f9fc; /* Soft background */
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Navbar Styles */
+.navbar {
+    background: linear-gradient(90deg, #0047ab, #1e90ff); /* Blue gradient */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.nav-link {
+    color: #fff;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+    color: #ffcc00; /* Highlight color */
+}
+
+/* Hero Section */
+.hero-section {
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+    margin-top: 1rem;
+}
+
+/* About Us Section */
+#about-us {
+    background-color: #fff;
+    padding: 3rem 0;
+}
+
+#about-us h2 {
+    color: #0047ab;
+    margin-bottom: 1.5rem;
+}
+
+/* Footer Styles */
+footer {
+    background: linear-gradient(90deg, #1e90ff, #0047ab); /* Gradient */
+    color: #fff;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+footer a {
+    color: #fff;
+    transition: color 0.3s ease-in-out;
+}
+
+footer a:hover {
+    color: #ffcc00;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    filter: invert(100%);
+    margin-right: 10px;
+}
