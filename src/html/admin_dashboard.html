@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../pages/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../pages/css/admin_dashboard.css">
+    
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <main class="main">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container">
+                <div class="logo">
+                    <h1>Abyysinia Care</h1>
+                    <h2>Admin</h2>
+                </div>
+
+                <button class=" mymenu navbar-toggler text-black" style="background-color: white;" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon text-black"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="admin_dashboard.html">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="admin_appointments.html">Appointments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="admin_logout.html">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <section class="admin_profile">
+            <div class="adminpro">
+                <img src="../images/Admin_icon.png" alt="Admin's-picture">
+                <div class="admin_name">
+                    <h3>John Doe</h3>
+                </div>
+            </div>
+
+            <div class="dashboard_screen">
+                <h2>Number of  Patients and doctors</h2>
+                <div class="num">
+                    <div class="patient-num">
+                        <img src="../images/patients.png" alt="">
+                        <span>1024+</span>
+                    </div>
+
+                    <div class="doc-num">
+                        <img src="../images/doctors.png" alt="">
+                        <span>60+</span>
+                        <div>
+                            <button id="add_doc">Add Doctor</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="search_nav">
+                    <div>
+                        <h1>User List</h1>
+                    </div>
+                    <div class="serch_form">
+                        <form class="d-flex" role="search">
+                            <div class="search_input">
+                                <span class="input-group-text"><i class="bi-search"></i></span>
+                                <input class="me-2" type="search" placeholder='Search' aria-label="Search">
+                            </div>
+                            <button class="btn" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="user_list">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Satus</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>John Doe</td>
+                                <td>John@example.com</td>
+                                <td><span>Doctor</span></td>
+                                <td><span>Active</span></td>
+                                <td>
+                                    <button class="btn deactivate"><span>Deactivate</span></button>
+                                    <button class="btn update">Update</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>John Doe</td>
+                                <td>John@example.com</td>
+                                <td><span>Doctor</span></td>
+                                <td><span>Active</span></td>
+                                <td>
+                                    <button class="btn deactivate"><span>Deactivate</span></button>
+                                    <button class="btn update">Update</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>John Doe</td>
+                                <td>John@example.com</td>
+                                <td><span>Doctor</span></td>
+                                <td><span>Active</span></td>
+                                <td>
+                                    <button class="btn deactivate"><span>Deactivate</span></button>
+                                    <button class="btn update">Update</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>John Doe</td>
+                                <td>John@example.com</td>
+                                <td><span>Doctor</span></td>
+                                <td><span>Active</span></td>
+                                <td>
+                                    <button class="btn deactivate"><span>Deactivate</span></button>
+                                    <button class="btn update">Update</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>John Doe</td>
+                                <td>John@example.com</td>
+                                <td><span>Doctor</span></td>
+                                <td><span>Active</span></td>
+                                <td>
+                                    <button class="btn deactivate"><span>Deactivate</span></button>
+                                    <button class="btn update">Update</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>John Doe</td>
+                                <td>John@example.com</td>
+                                <td><span>Doctor</span></td>
+                                <td><span>Active</span></td>
+                                <td>
+                                    <button class="btn deactivate"><span>Deactivate</span></button>
+                                    <button class="btn update">Update</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </section>
+
+
+        <footer>
+            <h1>
+                Abyysinia Care
+            </h1>
+            <h2>
+                Abyysinia Care &copy; 2024 all rights reserved.
+            </h2>
+        </footer>
+    </main>
+
+    <script src="../pages/adminjs/admin_dashboard.js"></script>
+    <script src="../pages/adminjs/bootstrap.min.js"></script>
+</body>
+</html>
