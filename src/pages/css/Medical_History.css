@@ -5,14 +5,14 @@ body {
     background-color: #f4f9fc;
   }
   
-  .home-header {
+  .medicalhistory-header {
     background-color: #0047ab;
     color: white;
     padding: 0.5rem 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  .home-header .logo {
+  .medicalhistory-header .logo {
     display: flex;
     align-items: center;
     font-size: 1.5rem;
@@ -22,47 +22,43 @@ body {
     color: white;
   }
   
-  .home-header .user-menu {
+  .medicalhistory-header .user-menu {
     display: flex;
     align-items: center;
   }
- #welcome{
-    color: #0047ab;
- }
-  .home-header .user-icon {
+  .medicalhistory-header .user-icon {
     border-radius: 50%;
     background-color: white;
     border: 1px solid #ccc;
     padding: 4px;
   }
   
-  .home-nav {
+  .medicalhistory-nav {
     border-bottom: 1px solid #ddd;
   }
   
-  .home-nav .nav-link {
+  .medicalhistory-nav .nav-link {
     font-size: 1rem;
     color: #0047ab;
     margin: 0 1rem;
   }
   
-  .home-nav .nav-link:hover {
+  .medicalhistory-nav .nav-link:hover {
     color: #1e90ff;
   }
-  #appointmentbtn{
-    background: linear-gradient(90deg, #0047ab, #1e90ff);
+  h2 {
+    color: #0047ab;
   }
-  #appointmentbtn:hover {
-    background: #1e70e0;
-}
-.content{
-    padding-bottom: 200px;
-}
-.content .btn{
-    text-align: center;
-}
-.hero-img img {
-    max-width: 100%;
-    height: 600px;
-}
   
+  .table {
+    background-color: white;
+    border-radius: 8px;
+  }
+  
+  .table th {
+    font-size: 1rem;
+  }
+  
+  .table td {
+    font-size: 0.9rem;
+  }
