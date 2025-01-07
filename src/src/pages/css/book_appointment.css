@@ -1,0 +1,73 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f9fc;
+  }
+  
+  .appointment-header {
+    background-color: #0047ab;
+    color: white;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .appointment-header .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  #logoutBtn{
+    color: white;
+  }
+  
+  .appointment-header .user-menu {
+    display: flex;
+    align-items: center;
+  }
+  .appointment-header .user-icon {
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 4px;
+  }
+  
+  .appointment-nav {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .appointment-nav .nav-link {
+    font-size: 1rem;
+    color: #0047ab;
+    margin: 0 1rem;
+  }
+  
+  .appointment-nav .nav-link:hover {
+    color: #1e90ff;
+  }
+  #pg{
+    text-align: center;
+  }
+  #days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+  }
+  
+  #days .day:hover {
+    background-color: #0047ab;
+    color: white;
+  }
+  
+  #days .day.selected {
+    background-color: #0047ab;
+    color: white;
+  }
+  #confirmAppointment {
+    background: linear-gradient(90deg, #0047ab, #1e90ff);
+  }
+  
+  #confirmAppointment:hover {
+    background-color: #276db5;
+  }
