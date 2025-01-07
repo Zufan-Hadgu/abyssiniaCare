@@ -1,0 +1,68 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f9fc;
+}
+
+.dashboard-header {
+  background-color: #0047ab;
+  color: white;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header .logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+#logoutBtn{
+  color: white;
+}
+
+.dashboard-header .user-menu {
+  display: flex;
+  align-items: center;
+}
+h2{
+  color: #0047ab;
+}
+
+.dashboard-header .user-icon {
+  border-radius: 50%;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 4px;
+}
+
+.dashboard-nav {
+  border-bottom: 1px solid #ddd;
+}
+
+.dashboard-nav .nav-link {
+  font-size: 1rem;
+  color: #0047ab;
+  margin: 0 1rem;
+}
+
+.dashboard-nav .nav-link:hover {
+  color: #1e90ff;
+}
+.profile-container {
+  margin-top: 30px;
+}
+
+.profile-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+.details-grid div {
+  padding: 5px 0;
+}
