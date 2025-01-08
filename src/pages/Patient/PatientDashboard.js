@@ -2,13 +2,18 @@
 import { Routes, Route,  useNavigate } from 'react-router-dom';
 import Header from '../../components/Header'; // Import your existing header component
 
-import React, { useState } from "react";
+ 
+import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar"; // Install with `npm install react-calendar`
 import "react-calendar/dist/Calendar.css";
 import "../css/AppointmentsContent.css"; 
 import hero from "../../Assets/images/scott-graham-OQMZwNd3ThU-unsplash.jpg"
 import "../css/patient_list.css"
  
+import { auth, db } from "../../../src/firebaseConfig"; // Adjust the path if needed
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { FaCamera } from "react-icons/fa"; // For profile picture upload icon
+import { collection, addDoc } from "firebase/firestore";
 
  
  
@@ -109,170 +114,185 @@ const HomeContent = () => {
   );
 };
 
- 
 
- 
 
  
-
-
  
 
 
 const ProfileContent = () => {
-  const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
-    name: "John Doe",
-    email: "johndoe@example.com",
-    phone: "+123 456 7890",
-    address: "123 Health Street, Wellness City",
-    dob: "1990-01-01",
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    dob: "",
+    profilePic: "", // URL to profile picture
   });
-  const [profilePhoto, setProfilePhoto] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [editMode, setEditMode] = useState(false); // To toggle between view and edit modes
+  const [newProfilePic, setNewProfilePic] = useState(null); // For handling profile pic uploads
 
-  // Toggle edit mode
-  const handleEdit = () => {
-    setIsEditing(!isEditing);
-  };
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const user = auth.currentUser;
+        if (!user) {
+          setError("No user logged in.");
+          return;
+        }
 
-  // Update form field values
-  const handleChange = (e) => {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setProfileData(docSnap.data());
+        } else {
+          setError("Profile not found.");
+        }
+      } catch (err) {
+        console.error("Error fetching profile: ", err);
+        setError("Failed to load profile. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfileData({ ...profileData, [name]: value });
   };
 
-  // Handle profile photo upload
-  const handlePhotoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => setProfilePhoto(e.target.result);
-      reader.readAsDataURL(file);
+  const handleSave = async () => {
+    setError("");
+    setMessage("");
+
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        setError("No user logged in.");
+        return;
+      }
+
+      const docRef = doc(db, "users", user.uid);
+      await updateDoc(docRef, profileData);
+
+      setMessage("Profile updated successfully.");
+      setEditMode(false); // Switch back to view mode after saving
+    } catch (err) {
+      console.error("Error updating profile: ", err);
+      setError("Failed to update profile. Please try again later.");
     }
   };
 
-  return (
-    <div className="container my-4">
-      <div className="row">
-        {/* Left Card */}
-        <div className="col-md-4">
-          <div className="card shadow-lg" style={{ backgroundColor: "#e3f2fd" }}>
-            <div className="card-body text-center">
-              <div className="profile-photo mb-3">
-                <img
-                  src={profilePhoto || "https://via.placeholder.com/150?text=Your+Photo"}
-                  alt="Profile"
-                  className="rounded-circle img-fluid"
-                  style={{ width: "150px", height: "150px", objectFit: "cover" }}
-                />
-              </div>
-              <h5 className="mt-3">{profileData.name}</h5>
-              <p><strong>Phone:</strong> {profileData.phone}</p>
-            </div>
-          </div>
-        </div>
+  const handleProfilePicChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setNewProfilePic(URL.createObjectURL(file));
+    }
+  };
 
-        {/* Right Card */}
-        <div className="col-md-8">
-          <div className="card shadow-lg" style={{ backgroundColor: "#bbdefb" }}>
-            <div className="card-body">
-              <h5 className="mb-4">Update Information</h5>
-              {!isEditing ? (
-                <div>
-                  <p><strong>Name:</strong> {profileData.name}</p>
-                  <p><strong>Email:</strong> {profileData.email}</p>
-                  <p><strong>Phone:</strong> {profileData.phone}</p>
-                  <p><strong>Address:</strong> {profileData.address}</p>
-                  <p><strong>Date of Birth:</strong> {profileData.dob}</p>
-                  <button
-                    className="btn btn-primary mt-3"
-                    onClick={handleEdit}
-                  >
-                    Edit Information
-                  </button>
-                </div>
-              ) : (
-                <form>
-                  <div className="mb-3">
-                    <label htmlFor="name" className="form-label">Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="name"
-                      name="name"
-                      value={profileData.name}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email</label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="email"
-                      name="email"
-                      value={profileData.email}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="phone" className="form-label">Phone</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="phone"
-                      name="phone"
-                      value={profileData.phone}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="address" className="form-label">Address</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="address"
-                      name="address"
-                      value={profileData.address}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="dob" className="form-label">Date of Birth</label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      id="dob"
-                      name="dob"
-                      value={profileData.dob}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="profilePhoto" className="form-label">Upload Photo</label>
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
+  };
+
+  if (loading) return <div>Loading...</div>;
+
+  return (
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-lg-8">
+          <div className="d-flex justify-content-between">
+            {/* Left Card - Profile Picture & Name */}
+            <div className="card p-4" style={{ width: "30%" }}>
+              <div className="text-center">
+                <div
+                  className="position-relative"
+                  style={{ width: "150px", height: "150px", margin: "0 auto" }}
+                >
+                  <img
+                    src={newProfilePic || profileData.profilePic || "/default-profile.jpg"} // Default image fallback
+                    alt="Profile"
+                    className="img-fluid rounded-circle"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                  <label htmlFor="profilePic" className="position-absolute bottom-0 end-0 p-2 bg-dark text-white rounded-circle">
+                    <FaCamera size={20} />
                     <input
                       type="file"
+                      id="profilePic"
+                      className="d-none"
                       accept="image/*"
-                      className="form-control"
-                      onChange={handlePhotoUpload}
+                      onChange={handleProfilePicChange}
                     />
-                  </div>
-                  <button
-                    type="button"
-                    className="btn btn-success"
-                    onClick={handleEdit}
-                  >
-                    Save Changes
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-secondary ms-2"
-                    onClick={() => setIsEditing(false)}
-                  >
-                    Cancel
-                  </button>
-                </form>
-              )}
+                  </label>
+                </div>
+                <h3 className="mt-3">{profileData.name}</h3>
+              </div>
+            </div>
+
+            {/* Right Card - Information with Editing */}
+            <div className="card p-4" style={{ width: "65%" }}>
+              <h2 className="text-center">Profile Information</h2>
+              {error && <p className="alert alert-danger">{error}</p>}
+              {message && <p className="alert alert-success">{message}</p>}
+              <form>
+                <div className="mb-3">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    className="form-control"
+                    value={profileData.email}
+                    readOnly
+                  />
+                </div>
+                <div className="mb-3">
+                  <label>Phone</label>
+                  <input
+                    type="text"
+                    name="phone"
+                    className="form-control"
+                    value={profileData.phone}
+                    onChange={handleInputChange}
+                    disabled={!editMode}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label>Address</label>
+                  <input
+                    type="text"
+                    name="address"
+                    className="form-control"
+                    value={profileData.address}
+                    onChange={handleInputChange}
+                    disabled={!editMode}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label>Date of Birth</label>
+                  <input
+                    type="date"
+                    name="dob"
+                    className="form-control"
+                    value={profileData.dob}
+                    onChange={handleInputChange}
+                    disabled={!editMode}
+                  />
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-primary w-100"
+                  onClick={editMode ? handleSave : toggleEditMode}
+                >
+                  {editMode ? "Save Changes" : "Edit Profile"}
+                </button>
+              </form>
             </div>
           </div>
         </div>
@@ -280,13 +300,6 @@ const ProfileContent = () => {
     </div>
   );
 };
-
- 
-
-
- 
-
- 
 
 const HistoryContent = () => {
   const [medicalHistory, setMedicalHistory] = useState([
@@ -382,17 +395,6 @@ const HistoryContent = () => {
   );
 };
 
-
- 
-
- 
-
- 
-
- 
-
- 
-
 const AppointmentsContent = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
@@ -418,17 +420,42 @@ const AppointmentsContent = () => {
     } else {
       setSelectedDate(null);
     }
-  };
-
-  const handleBookAppointment = () => {
+  }; 
+  // Update handleBookAppointment to save data to Firestore
+  const handleBookAppointment = async () => {
     if (selectedDate && selectedTime && selectedDoctor) {
-      setSuccessMessage(
-        `Appointment booked successfully with ${selectedDoctor} on ${selectedDate} (${selectedTime}).`
-      );
+      try {
+        // Fetch the patient name from the users collection
+        const userRef = doc(db, "users", auth.currentUser.uid); // Get reference to current user document
+        const userDoc = await getDoc(userRef);
+  
+        if (userDoc.exists()) {
+          const patientName = userDoc.data().name;
+  
+          // Save the appointment details to the appointments collection
+          await addDoc(collection(db, "appointments"), {
+            patientName: patientName, // Use the fetched patient name
+            doctor: selectedDoctor,
+            date: selectedDate,
+            time: selectedTime,
+            status: "Booked", // Status of the appointment
+          });
+  
+          setSuccessMessage(
+            `Appointment booked successfully with ${selectedDoctor} on ${selectedDate} (${selectedTime}).`
+          );
+        } else {
+          setSuccessMessage("Patient data not found. Please check your login status.");
+        }
+      } catch (error) {
+        console.error("Error booking appointment: ", error);
+        setSuccessMessage("There was an error booking your appointment. Please try again.");
+      }
     } else {
       setSuccessMessage("Please select a doctor, a date, and a time to book an appointment.");
     }
   };
+  
 
   return (
     <div className="container my-4">
@@ -498,15 +525,6 @@ const AppointmentsContent = () => {
     </div>
   );
 };
-
- 
-
- 
-
-
- 
-
-
 
 const PatientDashboard = () => {
   return (

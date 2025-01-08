@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -10,8 +10,16 @@ import DoctorDashboard from "./pages/Doctor/doctorDashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userType, setUserType] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem("isAuthenticated") === "true" // Persist state
+  );
+  const [userType, setUserType] = useState(localStorage.getItem("userType")); // Persist user type
+
+  useEffect(() => {
+    // Update localStorage when authentication changes
+    localStorage.setItem("isAuthenticated", isAuthenticated);
+    localStorage.setItem("userType", userType);
+  }, [isAuthenticated, userType]);
 
   return (
     <Router>
@@ -20,10 +28,37 @@ function App() {
         <main className="flex-grow-1">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} setUserType={setUserType} />} />
+            <Route
+  path="/login"
+  element={
+    <Login
+      setIsAuthenticated={setIsAuthenticated}
+      setUserType={setUserType}
+    />
+  }
+/>
+
             <Route path="/register" element={<Register />} />
-            <Route path="/patient-dashboard/*" element={isAuthenticated ? <PatientDashboard /> : <Login setIsAuthenticated={setIsAuthenticated} setUserType={setUserType} />} />
-            <Route path="/doctor-dashboard/*" element={isAuthenticated ? <DoctorDashboard /> : <Login setIsAuthenticated={setIsAuthenticated} setUserType={setUserType} />} />
+            <Route
+              path="/patient-dashboard/*"
+              element={
+                isAuthenticated && userType === "patient" ? (
+                  <PatientDashboard />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/doctor-dashboard/*"
+              element={
+                isAuthenticated && userType === "doctor" ? (
+                  <DoctorDashboard />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
           </Routes>
         </main>
         <Footer />

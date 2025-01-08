@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor's Dashboard</title>
+    <link rel="stylesheet" href="../pages/css/doctor_dashboard.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header d-flex justify-content-between align-items-center px-4 py-2">
+        <div class="logo">
+            <img src="../images/logo_3.jpg" alt="AbyssiniaCare Logo" width="40">
+            <span class="ms-2">AbyssiniaCare</span>
+        </div>
+        <div class="user-menu d-flex align-items-center">
+            
+            <button class="btn btn-outline-primary" id="logoutBtn">Logout</button>
+        </div>
+    </header>
+
+    <!-- Navbar -->
+    <nav class="dashboard-nav navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a href="#profile" class="nav-link">Profile</a></li>
+                <li class="nav-item"><a href="appointments.html" class="nav-link">Appointments</a></li>
+                <li class="nav-item"><a href="patient_list.html" class="nav-link">Patient List</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="dashboard-main text-center my-4">
+        <div class="doctor-photo">
+            <img src="../images/doctor_1.jpg" alt="Doctor's Picture" class="img-fluid rounded-circle" width="150">
+        </div>
+        <div class="doctor-details mt-3">
+            <h2 id="doctorName">Dr. John Doe</h2>
+            <p><strong>ID:</strong> <span id="doctorId">D12345</span></p>
+            <p><strong>Specialty:</strong> <span id="doctorSpecialty">Cardiologist</span></p>
+        </div>
+    </main>
+
+    <script src="../pages/doctor_portal_js/doctor_dashboard.js"></script>
+</body>
+</html>

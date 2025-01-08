@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebaseConfig";
 
-const Login = () => {
+const Login = ({ setIsAuthenticated, setUserType }) => { // Receive props
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -22,16 +22,25 @@ const Login = () => {
     e.preventDefault();
     try {
       // Sign in the user
-      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
       const user = userCredential.user;
 
       // Fetch user role from Firestore
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        if (userData.role === "admin" && formData.email !== "admin@example.com") {
-          throw new Error("Unauthorized admin access.");
-        }
+
+        // Save authentication state
+        localStorage.setItem("isAuthenticated", true);
+        localStorage.setItem("userType", userData.role);
+
+        // Update state via props
+        setIsAuthenticated(true);
+        setUserType(userData.role);
 
         // Redirect based on role
         switch (userData.role) {
@@ -40,9 +49,6 @@ const Login = () => {
             break;
           case "patient":
             navigate("/patient-dashboard");
-            break;
-          case "admin":
-            navigate("/admin-dashboard");
             break;
           default:
             throw new Error("Invalid role.");

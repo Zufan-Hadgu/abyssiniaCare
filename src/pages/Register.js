@@ -66,7 +66,7 @@ const Register = () => {
     setShowPassword(!showPassword); // Toggle password visibility
   };
 
-  return (
+return (
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-lg-4 col-md-6 col-sm-8 col-10">
