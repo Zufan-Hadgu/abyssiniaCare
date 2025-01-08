@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../firebaseConfig";
+import { setDoc, doc } from "firebase/firestore";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -6,25 +10,60 @@ const Register = () => {
     email: "",
     phone: "",
     password: "",
-    role: "patient", // Default role
+    role: "doctor", // default role is doctor
   });
 
+  const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // Clear any previous errors
+    setMessage(""); // Clear any previous success messages
 
-    // Simulate a successful registration response
-    if (formData.name && formData.email && formData.phone && formData.password) {
-      setMessage("Registration successful!");
-    } else {
-      setMessage("Please fill out all fields.");
+    try {
+      // Step 1: Create the user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = userCredential.user;
+
+      // Step 2: Store additional user data in Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        role: formData.role, // e.g., doctor, patient
+      });
+
+      // Step 3: Update success message
+      setMessage("Registration successful! Redirecting to login...");
+      setTimeout(() => {
+        navigate("/login"); // Redirect after 2 seconds
+      }, 2000);
+    } catch (error) {
+      console.error("Registration error: ", error.message);
+
+      // Step 4: Handle specific Firebase errors
+      if (error.code === "auth/email-already-in-use") {
+        setError("Email is already in use. Please try logging in.");
+      } else if (error.code === "auth/weak-password") {
+        setError("Password should be at least 6 characters.");
+      } else if (error.code === "auth/invalid-email") {
+        setError("Invalid email format.");
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle password visibility
   };
 
   return (
@@ -42,6 +81,7 @@ const Register = () => {
                   className="form-control"
                   onChange={handleInputChange}
                   value={formData.name}
+                  required
                 />
               </div>
               <div className="mb-3">
@@ -52,6 +92,7 @@ const Register = () => {
                   className="form-control"
                   onChange={handleInputChange}
                   value={formData.email}
+                  required
                 />
               </div>
               <div className="mb-3">
@@ -62,36 +103,52 @@ const Register = () => {
                   className="form-control"
                   onChange={handleInputChange}
                   value={formData.phone}
+                  required
                 />
               </div>
-              <div className="mb-3">
+              <div className="mb-3 position-relative">
                 <label>Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  className="form-control"
-                  onChange={handleInputChange}
-                  value={formData.password}
-                />
+                <div className="input-group">
+                  <input
+                    type={showPassword ? "text" : "password"} // Toggle input type
+                    name="password"
+                    className="form-control"
+                    onChange={handleInputChange}
+                    value={formData.password}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
               </div>
               <div className="mb-3">
                 <label>Role</label>
                 <select
-                  name="role"
-                  className="form-select"
-                  onChange={handleInputChange}
                   value={formData.role}
+                  onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                  className="form-control"
                 >
-                  <option value="patient">Patient</option>
                   <option value="doctor">Doctor</option>
-                  <option value="admin">Admin</option>
+                  <option value="patient">Patient</option>
                 </select>
               </div>
               <button type="submit" className="btn btn-primary w-100">
                 Register
               </button>
             </form>
-            {message && <p className="mt-3 alert alert-info">{message}</p>}
+            {error && <p className="mt-3 alert alert-danger">{error}</p>}
+            {message && <p className="mt-3 alert alert-success">{message}</p>}
+            <p className="mt-3 text-center">
+              Already have an account?{" "}
+              <Link to="/login" className="text-primary">
+                Login here
+              </Link>
+            </p>
           </div>
         </div>
       </div>

@@ -1,43 +1,98 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../firebaseConfig";
 
 const Login = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Sign in the user
+      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = userCredential.user;
+
+      // Fetch user role from Firestore
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        if (userData.role === "admin" && formData.email !== "admin@example.com") {
+          throw new Error("Unauthorized admin access.");
+        }
+
+        // Redirect based on role
+        switch (userData.role) {
+          case "doctor":
+            navigate("/doctor-dashboard");
+            break;
+          case "patient":
+            navigate("/patient-dashboard");
+            break;
+          case "admin":
+            navigate("/admin-dashboard");
+            break;
+          default:
+            throw new Error("Invalid role.");
+        }
+      } else {
+        throw new Error("User data not found.");
+      }
+    } catch (error) {
+      console.error("Login error: ", error.message);
+      setError(error.message);
+    }
+  };
+
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-lg-4 col-md-6 col-sm-8 col-10">
           <div className="card p-4">
-            <h1 className="text-center">Login</h1>
-            <form>
+            <h2 className="text-center">Login</h2>
+            <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="email" className="form-label">
-                  Email address
-                </label>
+                <label>Email</label>
                 <input
                   type="email"
+                  name="email"
                   className="form-control"
-                  id="email"
-                  placeholder="Enter your email"
+                  onChange={handleInputChange}
+                  value={formData.email}
+                  required
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="password" className="form-label">
-                  Password
-                </label>
+                <label>Password</label>
                 <input
                   type="password"
+                  name="password"
                   className="form-control"
-                  id="password"
-                  placeholder="Enter your password"
+                  onChange={handleInputChange}
+                  value={formData.password}
+                  required
                 />
               </div>
               <button type="submit" className="btn btn-primary w-100">
                 Login
               </button>
             </form>
+            {error && <p className="mt-3 alert alert-danger">{error}</p>}
             <p className="mt-3 text-center">
               Don't have an account?{" "}
-              <Link to="/register" className="text-decoration-none">
+              <Link to="/register" className="text-primary">
                 Register here
               </Link>
             </p>

@@ -1,0 +1,133 @@
+/* General container styles */
+.home-content {
+    padding: 60px 0;
+  }
+  
+  .text-section {
+    text-align: left;
+  }
+  
+  .doctor-name {
+    font-size: 36px;
+    font-weight: bold;
+    color: #007bff; /* Primary blue color */
+  }
+  
+  .doctor-specialty {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .doctor-id {
+    font-size: 18px;
+    color: #6c757d; /* Gray color */
+    margin-bottom: 10px;
+  }
+  
+  .description {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #6c757d;
+  }
+  
+  /* Button styling */
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-outline-primary {
+    border-color: #007bff;
+    color: #007bff;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  /* Image styling */
+  .image-section .doctor-image {
+    max-width: 80%;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .home-content {
+      text-align: center;
+    }
+  
+    .text-section {
+      margin-bottom: 30px;
+    }
+  
+    .image-section .doctor-image {
+      max-width: 100%;
+    }
+  }
+/* General container styling */
+.profile-content {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  /* Card Styling */
+  .card {
+    border-radius: 8px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .updated-info {
+    background-color: #ffffff;
+  }
+  
+  .updating-info {
+    background-color: #f9f9ff;
+  }
+  
+  /* Title Styling */
+  .card-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+  
+  /* Description Styling */
+  .description {
+    font-size: 16px;
+    color: #6c757d;
+    margin-bottom: 20px;
+  }
+  
+  /* Input Field Styling */
+  .input-field {
+    width: 90%; /* Reduced width */
+    border-radius: 4px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    font-size: 14px;
+  }
+  
+  .input-field:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Button Styling */
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  

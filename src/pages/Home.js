@@ -4,19 +4,47 @@ import "./css/Home.css"; // Assuming you are adding custom CSS styles in a separ
 import Appimg from '../Assets/images/Appoin.jpg'
 import recored from '../Assets/images/Recored.jpg'
 import presc from '../Assets/images/Prescr.jpg'
+import docfam from '../Assets/images/doctorwithfamily.jpg'
+import heart from "../Assets/images/heart (1).png"
+import nutriton from "../Assets/images/heart (2).png"
+import mental from "../Assets/images/heart (3).png"
+ 
 
 const Home = () => {
   return (
     <div>
       {/* Hero Section with Background Image */}
-      <div className="hero-section" id="hero">
-        <div className="overlay">
-          <h1 className="hero-text">Welcome to Medical Care</h1>
-          <p className="hero-subtext">
-            Your trusted platform for efficient and modern healthcare management.
-          </p>
+       
+   
+       
+ 
+      <div className="hero-section">
+        <div className="hero-content">
+          {/* Overlapping Text Container */}
+          <div className="text-container">
+            <h1>We Take Care Of Your Healthy Health</h1>
+            <p>
+              Mimple dummy text of the printing type setting area lead spsum
+              dolor onsecte dipiscing. Mimple dummy text printing apsum dolor
+              onsecte dipiscing.
+            </p>
+            <button className="cta-button"><a className="nav-link" href="#Services"> see our Services</a></button>
+          </div>
+          {/* Image Section */}
+          <div className="image-container">
+            <img
+              src={docfam}// Replace with your actual image path
+              alt="Doctor with family"
+            />
+          </div>
         </div>
       </div>
+    
+
+ 
+    
+ 
+
 
       {/* Medical Articles Section */}
       <div id="articles" className="container mt-5">
@@ -26,7 +54,7 @@ const Home = () => {
           <div className="col-md-4">
             <div className="card shadow-sm h-100">
               <img
-                src="https://via.placeholder.com/300x200?text=Heart+Health"
+                src={heart}
                 className="card-img-top"
                 alt="Heart Health"
               />
@@ -46,7 +74,7 @@ const Home = () => {
           <div className="col-md-4">
             <div className="card shadow-sm h-100">
               <img
-                src="https://via.placeholder.com/300x200?text=Nutrition"
+                src={nutriton}
                 className="card-img-top"
                 alt="Nutrition"
               />
@@ -66,7 +94,7 @@ const Home = () => {
           <div className="col-md-4">
             <div className="card shadow-sm h-100">
               <img
-                src="https://via.placeholder.com/300x200?text=Mental+Health"
+                src={mental}
                 className="card-img-top"
                 alt="Mental Health"
               />
@@ -84,59 +112,51 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div id="Services" className="container mt-5">
+ 
+    <div id="Services" className="container mt-5 pb-3">
       <h1 className="text-center mb-4">Our Services</h1>
-      <div className="row">
-        {/* Online Appointment Booking */}
-        <div className="col-md-4">
-          <div className="card shadow-sm h-100">
-            <img
-              src={Appimg}
-              className="card-img-top"
-              alt="Online Appointment Booking"
-            />
-            <div className="card-body">
-              <h5 className="card-title">Online Appointment Booking</h5>
-              <p className="card-text">
-                Book your appointments easily from the comfort of your home and avoid long queues.
-              </p>
+      <div className="row services-section">
+        {/* Service 1 */}
+        <div className="col-md-3 col-sm-6">
+          <div className="service-card">
+            <div className="service-icon">
+              <i className="fas fa-user-md"></i>
             </div>
+            <h5 className="service-title">Online Appointment Booking </h5>
+            <p className="service-text">
+            Book your appointments easily from the comfort of your home.
+            </p>
           </div>
         </div>
-        {/* Digital Medical Records */}
-        <div className="col-md-4">
-          <div className="card shadow-sm h-100">
-            <img
-              src={recored}
-              className="card-img-top"
-              alt="Digital Medical Records"
-            />
-            <div className="card-body">
-              <h5 className="card-title">Digital Medical Records</h5>
-              <p className="card-text">
-                Access your medical history and records anytime, securely and conveniently.
-              </p>
+        {/* Service 2 */}
+        <div className="col-md-3 col-sm-6">
+          <div className="service-card">
+            <div className="service-icon">
+              <i class="fa-solid fa-notes-medical"></i>
             </div>
+            <h5 className="service-title">Digital Medical recoreds</h5>
+            <p className="service-text">
+            Access your medical history and records anytime, securely and conveniently.
+            </p>
           </div>
         </div>
-        {/* Prescription Management */}
-        <div className="col-md-4">
-          <div className="card shadow-sm h-100">
-            <img
-              src={presc}
-              className="card-img-top"
-              alt="Prescription Management"
-            />
-            <div className="card-body">
-              <h5 className="card-title">Prescription Management</h5>
-              <p className="card-text">
-                View and manage prescriptions issued by your doctor with ease.
-              </p>
+        {/* Service 3 */}
+        <div className="col-md-3 col-sm-6">
+          <div className="service-card">
+            <div className="service-icon">
+            <i className="fas fa-prescription"></i>
             </div>
+            <h5 className="service-title">Prescription Management</h5>
+            <p className="service-text">
+            View and manage prescriptions issued by your doctor with ease.
+            </p>
           </div>
         </div>
+         
       </div>
     </div>
+ 
+
     </div>
   );
 };
